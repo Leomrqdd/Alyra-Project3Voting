@@ -6,7 +6,7 @@ function Address() {
 
     return (
         <div className="addr">
-            Votre address eth:
+            Your eth address is :
             <br />
             {accounts && accounts[0] && <pre>{accounts[0]}</pre>}
         </div>

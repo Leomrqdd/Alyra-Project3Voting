@@ -10,6 +10,11 @@ import Vote from "./Vote";
 import EndVotingSession from "./EndVotingSession";
 import CountVotes from "./CountVotes";
 import Results from "./Results";
+import GetProposal from "./GetProposal";
+import Workflow from "./Workflow";
+import ContractAddress from "./ContractAddress";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 
 
@@ -25,24 +30,31 @@ function VotingStuff() {
     };
     
     return (
+        
         <div className="VotingStuff"> 
-        <button onClick={() => handleUserTypeChange('owner')}>
-        Je suis le créateur du contrat
+
+        <div className="btn-group" role="group" aria-label="Basic example">
+        <button className="btn btn-primary" onClick={() => handleUserTypeChange('owner')}>
+        You are the owner of the Contract
         </button>
-        <button onClick={() => handleUserTypeChange('voter')}>
-        Je suis un voteur
+        <button className="btn btn-primary" onClick={() => handleUserTypeChange('voter')}>
+        You are a Voter
         </button>
-        <button onClick={() => handleUserTypeChange('normal')}>
-        Je suis un utilisateur normal
+        <button className="btn btn-primary" onClick={() => handleUserTypeChange('normal')}>
+        You are a simple User
         </button>
+        </div>
 
         {userType === 'owner' && (
         <div>
-        <p>Vous êtes le créateur du contrat.</p>
+        <p>You are the owner of the contract.</p>
         <Address accounts={accounts}/>
+        <ContractAddress/>
+        <Workflow/>
         <AddVoter/>
         <StartProposalRegistration/>
         <AddProposal/>
+        <GetProposal/>
         <EndProposalRegistration/>
         <StartVotingSession/>
         <Vote/>
@@ -54,9 +66,12 @@ function VotingStuff() {
       )}
       {userType === 'voter' && (
         <div>
-        <p>Vous êtes un voteur.</p>
+        <p>You are a Voter.</p>
         <Address accounts={accounts}/>
+        <ContractAddress/>
+        <Workflow/>
         <AddProposal/>
+        <GetProposal/>
         <Vote/>
         <Results/>
         </div>
@@ -64,8 +79,10 @@ function VotingStuff() {
       )}
       {userType === 'normal' && (
         <div>
-        <p>Vous êtes un utilisateur normal.</p>
+        <p>You are a simple user.</p>
         <Address accounts={accounts}/>
+        <ContractAddress/>
+        <Workflow/>
         <Results/>
         </div>
       )}
