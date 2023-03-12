@@ -55,6 +55,20 @@ contract Voting is Ownable {
     function getVoter(address _addr) external onlyVoters view returns (Voter memory) {
         return voters[_addr];
     }
+
+    /// Return true if the address is registered as a Voter
+    /// @param _addr the eth address
+    /// @dev return a boolean, true if _addr is a Voter
+    function getVoterBool(address _addr) external view returns (bool) {
+     return (voters[_addr].isRegistered);
+    }
+
+    /// Return the address of the Owner
+    /// @dev use the owner function of the Ownable contract to return the eth address of the Owner
+        function getOwner() external view returns(address) {
+        return owner();
+    }
+
     
     /// Return info about a Proposal
     /// @param _id the id of a Proposal

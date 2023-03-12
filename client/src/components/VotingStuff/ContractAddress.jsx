@@ -8,16 +8,20 @@ function ContractAddress() {
     useEffect(() => {
 
         const fetchContractAddress = async() => {
-            const address = await contract.options.address;
-            setContractAddress(address);
+            if (contract) {
+                 const address = await contract.options.address;
+                setContractAddress(address);
+            }
         };
         fetchContractAddress();
     },[contract]);
 
 
     return(
-        <div>
-        <p>Contract Address : <pre>{contractAddress}</pre> </p>    
+        <div className="addr">
+            The Contract Address is :
+            <br />
+            {contract && <pre>{contractAddress}</pre>}
         </div>
     );
 

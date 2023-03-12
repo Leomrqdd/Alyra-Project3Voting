@@ -56,7 +56,7 @@ function AddProposal() {
         AddOneProposal
       </button>
       <div>
-       Proposal Id added: {eventValue} 
+       {eventValue && <div> Proposal Id added: {eventValue} </div>}
          <br/>
         <div>
         {oldEvents && (

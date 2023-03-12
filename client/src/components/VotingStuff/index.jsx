@@ -17,35 +17,55 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 
-
 function VotingStuff() {
 
     const {state: {contract, accounts} } = useEth();
-    const [userType, setUserType] = useState('');
+    const [userType, setUserType] = useState('normal');
+    const [web3Enabled, setWeb3Enabled] = useState(false);
 
 
-    const handleUserTypeChange = (newUserType) => {
-    
-      setUserType(newUserType);
-    };
+    useEffect(() => {
+
+      const checkUserType = async () => {
+        if (contract && accounts) {
+
+          const isOwner = await contract.methods.getOwner().call({ from: accounts[0] });
+          if (isOwner === accounts[0]) {
+            setUserType('owner');
+          } else {
+            const isVoter = await contract.methods.getVoterBool(accounts[0]).call({ from: accounts[0] });
+            if (isVoter) {
+              setUserType('voter');
+            } else {
+              setUserType('normal');
+            }
+          }
+      }
+      }
+      checkUserType();
+    }, [contract, accounts]);
+
+    useEffect(() => {
+      const checkWeb3 = async () => {
+        if (window.ethereum) {
+          try {
+            await window.ethereum.request({ method: "eth_requestAccounts" });
+            setWeb3Enabled(true);
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      };
+      checkWeb3();
+    }, []);
     
     return (
         
         <div className="VotingStuff"> 
 
-        <div className="btn-group" role="group" aria-label="Basic example">
-        <button className="btn btn-primary" onClick={() => handleUserTypeChange('owner')}>
-        You are the owner of the Contract
-        </button>
-        <button className="btn btn-primary" onClick={() => handleUserTypeChange('voter')}>
-        You are a Voter
-        </button>
-        <button className="btn btn-primary" onClick={() => handleUserTypeChange('normal')}>
-        You are a simple User
-        </button>
-        </div>
+        {!web3Enabled && <p>Please connect to Metamask</p>}
 
-        {userType === 'owner' && (
+        {userType === 'owner' && web3Enabled && (
         <div>
         <p>You are the owner of the contract.</p>
         <Address accounts={accounts}/>
@@ -53,18 +73,15 @@ function VotingStuff() {
         <Workflow/>
         <AddVoter/>
         <StartProposalRegistration/>
-        <AddProposal/>
-        <GetProposal/>
         <EndProposalRegistration/>
         <StartVotingSession/>
-        <Vote/>
         <EndVotingSession/>
         <CountVotes/>
         <Results/>
         </div>
 
       )}
-      {userType === 'voter' && (
+      {userType === 'voter' && web3Enabled && (
         <div>
         <p>You are a Voter.</p>
         <Address accounts={accounts}/>
@@ -77,7 +94,7 @@ function VotingStuff() {
         </div>
 
       )}
-      {userType === 'normal' && (
+      {userType === 'normal' && web3Enabled && (
         <div>
         <p>You are a simple user.</p>
         <Address accounts={accounts}/>

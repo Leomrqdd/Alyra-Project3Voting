@@ -62,7 +62,7 @@ function AddVoter() {
         addVoter
       </button>
       <div>
-       Voter added: {eventValue} 
+      {eventValue && <div>Voter added: {eventValue}</div>}
         <br/>
         <div>
         <p>List of Voters:</p>

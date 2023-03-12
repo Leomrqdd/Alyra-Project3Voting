@@ -5,19 +5,41 @@ import { useState, useEffect } from "react";
 
 function Workflow() {
     const {state : {accounts,contract}} = useEth();
-    const [input, setInput] = useState(null);
+    const [input, setInput] = useState();
+    const [eventValue,setEventValue] = useState();
     
 
     useEffect(() => {
         const fetchWorkflowStatus =async() => {
+          if (contract) {
             const value = await contract.methods.workflowStatus().call({from : accounts[0]});
             setInput(value);
-
         };
+        }
         fetchWorkflowStatus();
-      }, [contract]);
+      }, [accounts, contract, input,eventValue]);
+
+
+  useEffect(() => {
+    (async function () {
+      if (contract) {
+        await contract.events.WorkflowStatusChange({fromBlock:"earliest"})
+        .on('data', event => {
+          let lesevents = event.returnValues.newStatus;
+          setEventValue(lesevents);
+        })          
+        .on('changed', changed => console.log(changed))
+        .on('error', err => console.log(err))
+        .on('connected', str => console.log(str))
+      }
+    })();
+
+  }, [contract])
+
+
 
       let voteStatusMessage;
+
 
   switch (input) {
     case "0":
