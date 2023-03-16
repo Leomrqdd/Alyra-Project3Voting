@@ -10,7 +10,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "build"),
   },
-  resolve: { extensions },
+  resolve: {
+    extensions,
+  },
   devServer: {
     client: {
       overlay: false,
@@ -32,7 +34,13 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ["style-loader", "css-loader"],
+        include: path.resolve(__dirname, "src"),
+        use: ["style-loader", "css-loader", "postcss-loader"],
+      },
+      {
+        test: /\.(png|jpe?g|gif|svg|eot|ttf|woff|woff2)$/i,
+        // More information here https://webpack.js.org/guides/asset-modules/
+        type: "asset/resource",
       },
     ],
   },
