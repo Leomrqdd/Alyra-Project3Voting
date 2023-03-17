@@ -10,6 +10,3 @@ function App() {
 
 export default App;
 
-// TODO
-// Clear form input "addVoter" after successfully adding a voter
-// Add a dynamic list showing added voters
