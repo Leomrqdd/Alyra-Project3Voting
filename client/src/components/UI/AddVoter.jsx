@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import useVoting from "../contexts/VotingContext/useVoting";
+import useVoting from "../../contexts/VotingContext/useVoting";
 
 function AddVoter() {
   const {
@@ -45,28 +45,41 @@ function AddVoter() {
   };
 
   return (
-    <div>
+    <div className="w-1/2 p-4" >
+    <div className="flex relative mt-2 rounded-md shadow-sm">
       <input
         type="text"
         placeholder="address"
+        className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-teal-500 sm:text-sm sm:leading-6"
         value={inputAddress}
         onChange={handleAddressChange}
       />
-      <button onClick={addVoter}>addVoter</button>
+      <button 
+      className="bg-teal-500 px-7 border-transparent rounded-md cursor-pointer hover:bg-teal-700 mx-4 flex justify-center items-center"
+      onClick={addVoter}
+      >
+      <span className="text-white whitespace-nowrap">Add Voter</span>
+      </button>
+      </div>
+
       <div>
-        {eventValue && <div>Voter added: {eventValue}</div>}
+        {eventValue && 
+        <div class="text-gray-600 mb-2 italic">
+        Voter added: {eventValue}
+        </div>
+        }
+
         <br />
-        <div>
-          <p>List of Voters:</p>
+
+        <p class="text-gray-600 mb-2 italic">List of Voters:</p>
           {oldEvents &&
             oldEvents.map((event, index) => (
-              <p key={index}>
+              <p className="text-gray-600 mb-2 italic" key={index}>
                 Voter {index + 1}: {event}
               </p>
             ))}
         </div>
       </div>
-    </div>
   );
 }
 

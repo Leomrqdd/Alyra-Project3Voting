@@ -1,10 +1,11 @@
 import { useState } from "react";
-import VoterList from "../components/UI/VoterList";
+import AddVoter from "./UI/AddVoter";
+import Results from "../components/UI/Results"
+
 
 const Admin = () => {
   const [activeTab, setActiveTab] = useState({
     voters: true,
-    proposals: false,
     results: false,
   });
 
@@ -23,7 +24,6 @@ const Admin = () => {
           onClick={() =>
             setActiveTab({
               voters: true,
-              proposals: false,
               results: false,
             })
           }
@@ -31,25 +31,11 @@ const Admin = () => {
           Voters
         </li>
         <li
-          key={"Proposals"}
-          className={tabItemClass(activeTab.proposals)}
-          onClick={() =>
-            setActiveTab({
-              voters: false,
-              proposals: true,
-              results: false,
-            })
-          }
-        >
-          Proposals
-        </li>
-        <li
           key={"Results"}
           className={tabItemClass(activeTab.results)}
           onClick={() =>
             setActiveTab({
               voters: false,
-              proposals: false,
               results: true,
             })
           }
@@ -59,17 +45,12 @@ const Admin = () => {
       </ul>
       {activeTab.voters && (
         <div className="mt-4 flex w-full items-center justify-center rounded-xl bg-white p-8 sm:col-span-2 min-h-[400px]">
-          <VoterList />
-        </div>
-      )}
-      {activeTab.proposals && (
-        <div className="mt-4 flex w-full items-center justify-center rounded-xl bg-white p-8 sm:col-span-2 min-h-[400px]">
-          <p className="font-medium text-gray-600">Proposals Content</p>
+          <AddVoter/>
         </div>
       )}
       {activeTab.results && (
         <div className="mt-4 flex w-full items-center justify-center rounded-xl bg-white p-8 sm:col-span-2 min-h-[400px]">
-          <p className="font-medium text-gray-600">Results Content</p>
+          <Results/>
         </div>
       )}
     </div>

@@ -79,6 +79,12 @@ contract Voting is Ownable {
         return proposalsArray[_id];
     }
 
+    /// Return the numbers of Proposals Registered
+    /// @dev return the length of the proposalsArray
+       function getProposalLength() external view returns(uint) {
+        return proposalsArray.length;
+    }
+
     // ::::::::::::: REGISTRATION ::::::::::::: //
 
     // Add a Voter to the Voting process

@@ -1,3 +1,5 @@
+import Results from "./UI/Results";
+
 const Viewer = () => {
   return (
     <div className="w-full md:justify-evenly ">
@@ -7,7 +9,7 @@ const Viewer = () => {
         </li>
       </ul>
       <div className="mt-4 flex w-full items-center justify-center rounded-xl bg-white p-8 sm:col-span-2 min-h-[400px]">
-        <p className="font-medium text-gray-600">Content</p>
+        <Results/>
       </div>
     </div>
   );
