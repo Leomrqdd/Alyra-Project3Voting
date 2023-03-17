@@ -3,7 +3,7 @@ import useVoting from "../../contexts/VotingContext/useVoting";
 
 function AddVoter() {
   const {
-    state: { contract, accounts, web3 },
+    state: { contract, accounts, web3,txhash },
   } = useVoting();
   const [inputAddress, setInputAddress] = useState("");
   const [eventValue, setEventValue] = useState("");
@@ -15,8 +15,9 @@ function AddVoter() {
 
   useEffect(() => {
     (async function () {
+      const deployTx = await web3.eth.getTransaction(txhash)
       let oldEvents = await contract.getPastEvents("VoterRegistered", {
-        fromBlock: 0,
+        fromBlock: deployTx.blockNumber,
         toBlock: "latest",
       });
       let oldies = [];
@@ -64,14 +65,14 @@ function AddVoter() {
 
       <div>
         {eventValue && 
-        <div class="text-gray-600 mb-2 italic">
+        <div className="text-gray-600 mb-2 italic">
         Voter added: {eventValue}
         </div>
         }
 
         <br />
 
-        <p class="text-gray-600 mb-2 italic">List of Voters:</p>
+        <p className="text-gray-600 mb-2 italic">List of Voters:</p>
           {oldEvents &&
             oldEvents.map((event, index) => (
               <p className="text-gray-600 mb-2 italic" key={index}>

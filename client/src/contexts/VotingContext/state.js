@@ -8,6 +8,7 @@ const initialState = {
   accounts: null,
   networkID: null,
   contract: null,
+  txhash:null,
   voterList: [],
   proposalList: [],
 };

@@ -3,7 +3,7 @@ import useVoting from "../../contexts/VotingContext/useVoting";
 
 function AddProposal() {
   const {
-    state: { contract, accounts, web3 },
+    state: { contract, accounts, web3, txhash },
   } = useVoting();
   const [inputProposal, setInputProposal] = useState("");
   const [eventValue, setEventValue] = useState("");
@@ -21,8 +21,9 @@ function AddProposal() {
 
   useEffect(() => {
     (async function () {
+      const deployTx = await web3.eth.getTransaction(txhash)
       let oldEvents = await contract.getPastEvents("ProposalRegistered", {
-        fromBlock: 0,
+        fromBlock: deployTx.blockNumber,
         toBlock: "latest",
       });
       let oldies = [];
@@ -73,13 +74,13 @@ function AddProposal() {
 
       <div>
       {eventValue && (
-        <div class="text-gray-600 mb-2 italic">
+        <div className="text-gray-600 mb-2 italic">
           Proposal Id added: {eventValue}
         </div>
 )}        
       </div>
-
     </div>
+    
   );
 }
 
