@@ -1,5 +1,5 @@
 import { useState } from "react";
-import AddProposal from "../components/UI/AddProposal"
+import AddProposal from "./UI/AddProposal"
 import ProposalsList from "./UI/ProposalsList";
 import Results from "./UI/Results";
 import Vote from "./UI/Vote";
