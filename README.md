@@ -8,7 +8,7 @@ For this project, we have used the Truffle Box, React and TailWindCss.
 
 ## Links 
 
-link to our video : 
+link to our video : https://www.youtube.com/watch?v=wfxtKyHKcJc
 
 link to our Versel website : https://final-alyra-project3-voting.vercel.app/
 
